@@ -4,3 +4,9 @@ This is the repository for the paper **Resilient Urban Public Transportation Inf
 main.py          | run the anlaysis (see the paper)  
 xc_resilience.py | framework of resilience cycle analysis  
 dataset          | demo dataset: adjacency matrices, Origin-Destination flow matrix, node coordinates  
+
+| File | Discription |
+| :-----| :---- |
+| main.py | run the anlaysis (see the paper)
+| xc_resilience.py | framework of resilience cycle analysis
+| Dataset | example data: adjacency matrices, Origin-Destination flow matrix, node coordinates
