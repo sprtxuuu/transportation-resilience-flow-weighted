@@ -1,3 +1,23 @@
+# version 1.5 updated 30 Sep 2021
+# travel distance calculation added
+
+# version 1.4 updated
+# add unweighted relocation analysis (node level)
+
+# version 1.3 updated
+# add parameter trip_edge= {trip: [edge,...]}
+# (need manual read load_pet)
+# can load edge list from trip_edge dict
+
+# version 1.2 updated
+# add capacity-weighted model based on trips/routes
+# add capacity-related parameters
+
+# version 1.1 updated
+# can combine two ClassResilience providing cross-layer edges
+
+
+
 import csv
 import numpy as np
 import networkx as nx
@@ -320,7 +340,7 @@ class Resilience:
                 total_trip_len += trip_len * flow
                 total_flow += flow
             mean_trip_len = total_trip_len / total_flow
-            return round(mean_trip_len,3)
+            return round(mean_trip_len, 3)
         else:
             return travel_distance_distribution
 
@@ -620,6 +640,7 @@ class Resilience:
         """
         :return: dict of node relocation
         """
+
         def df(d):
             will = 1 - d / 1600
             if 0 <= will <= 1:
@@ -1059,5 +1080,3 @@ def revert_dict_of_list(original_dict):
         for v in value:
             new_dict[v].append(key)
     return dict(new_dict)
-
-

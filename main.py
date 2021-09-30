@@ -1,6 +1,5 @@
 import xc_resilience as xc
 
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     ad_path, f_path, gps_path = {}, {}, {}
     ad_path['LDN'] = 'Metro networks project/London Adjacency Matrix.csv'
@@ -52,4 +51,3 @@ if __name__ == '__main__':
     # SG = Resilience('SG')
     # SG.load_adjacency_matrix(file_path=ad_path['SG'])
     # SG.load_flow_matrix(file_path=f_path['SG'])
-
