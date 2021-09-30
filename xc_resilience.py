@@ -16,8 +16,6 @@
 # version 1.1 updated
 # can combine two ClassResilience providing cross-layer edges
 
-
-
 import csv
 import numpy as np
 import networkx as nx
