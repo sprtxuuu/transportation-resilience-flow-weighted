@@ -5,7 +5,7 @@ To conduct the analysis with the example data, find and run the main.py.
 
 Codes covering the resilience cycle framework are in the xc_resilience.py.
 
-We also provide details in data collection of Origin-Destination flow from publicly available datasets (Data_Collection_Information.docx).
+We also provide details in data collection of Origin-Destination flows from publicly available datasets (Data_Collection_Information.docx).
 
 | File | Discription |
 | :-----| :---- |
