@@ -30,13 +30,13 @@ import pandas as pd
 import math
 from math import radians, cos, sin, asin, sqrt
 from networkx.algorithms import approximation as approx
-import itertools
-import multiprocessing
 from tqdm import tqdm
-from itertools import combinations
-from itertools import product
 from itertools import permutations
 import json
+import itertools
+import multiprocessing
+from itertools import combinations
+from itertools import product
 import matplotlib
 
 
