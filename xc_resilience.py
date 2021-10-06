@@ -44,9 +44,9 @@ class Resilience:
     def __init__(self, graph_name, indexing=False):
         self.name = graph_name
         self.G = nx.DiGraph()
-        ## geospatial data
+        # geospatial data
         self.node_coordinates = {}  # (lat, lon)
-        ## flow-weighted model
+        # flow-weighted model
         # self.flow_matrix = None
         self.od_flow = {}
         self.node_flow = {}
@@ -61,14 +61,14 @@ class Resilience:
         self._relocation_edge_weight = None
         self._restoration_edge_dict = None
         self._restoration_node_weight = None
-        ## capacity-weighted model based on trips/routes
+        # capacity-weighted model based on trips/routes
         self.edge_trip = {}
         self.trip_edge = {}  # {trip: list of edges}
         self.edge_param = defaultdict(dict)
         self.node_param = defaultdict(dict)
         self.edge_capacity = {}
         self.node_capacity = {}
-        ## multi-processing
+        # multi-processing
         self.core_num = 8
 
     def save_weights_to_json(self):
