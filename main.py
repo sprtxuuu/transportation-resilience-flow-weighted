@@ -52,20 +52,23 @@ if __name__ == '__main__':
     for network in networks:
         print(network.name, network.preparedness_gini())
 
-    # robustness analysis
+    """robustness analysis"""
     # for network in networks:
-    #     network.robustness_flow_weighted_degree_based_attack(multi_processing=True)
-    #     network.robustness_flow_weighted_node_flow_based_attack(multi_processing=True)
-    #     network.robustness_flow_weighted_betweenness_based_attack(multi_processing=False, number_of_tests=1)
-    #     network.robustness_flow_weighted_flow_centrality_based_attack(multi_processing=False, number_of_tests=1)
+    #     network.core_num = 4  # number of CPU cores for multi-processing, default value = 8
+    #     network.robustness_flow_weighted_degree_based_attack(multi_processing=True, number_of_tests=1000)
+    #     network.robustness_flow_weighted_node_flow_based_attack(multi_processing=True, number_of_tests=100)
+    #     network.robustness_flow_weighted_betweenness_based_attack(multi_processing=False, number_of_tests=10)
+    #     network.robustness_flow_weighted_flow_centrality_based_attack(multi_processing=False, number_of_tests=10)
     #     network.robustness_flow_weighted_random_attack(multi_processing=False)
 
+    """recovery analysis"""
     # print(BA.get_node_list())
     # print(BA.node_coordinates)
     # print(BA.od_flow)
     # print(BA.flow_weighted_restoration(0.5, 'node_flow', 2))
     # BA.robustness_flow_weighted_betweenness_based_attack()
 
+    """adaptation"""
     # BA.robustness_flow_weighted_degree_based_attack(multi_processing=True)
     # BA.robustness_flow_weighted_node_flow_based_attack(multi_processing=True)
     # BA.robustness_flow_weighted_betweenness_based_attack(multi_processing=False, number_of_tests=1)
