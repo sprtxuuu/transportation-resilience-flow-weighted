@@ -55,13 +55,13 @@ class Resilience:
         if self.indexing:
             self.node2index = None
             self.index2node = None
-        self._matrix_header = None
+        self._matrix_header = None  # load from adjacency matrix
         self._edge_dict = None
         self._relocation_edge_dict = None
         self._relocation_edge_weight = None
         self._restoration_edge_dict = None
         self._restoration_node_weight = None
-        # capacity-weighted model based on trips/routes
+        # capacity-weighted model based on trips/routes (GTFS...)
         self.edge_trip = {}
         self.trip_edge = {}  # {trip: list of edges}
         self.edge_param = defaultdict(dict)
@@ -132,7 +132,8 @@ class Resilience:
             for idy, y in enumerate(node_list):
                 if int(matrix[idx][idy]) > 0:
                     self.G.add_edge(x, y)
-        print(f'{self.name}, '
+        print('\nnetwork created:',
+              f'name = {self.name}, '
               f'number of nodes = {self.G.number_of_nodes()}, '
               f'number of edges = {self.G.number_of_edges()}')
 
