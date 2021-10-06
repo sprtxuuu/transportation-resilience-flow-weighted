@@ -745,6 +745,8 @@ class Resilience:
         return shortest_paths[end][1], path
 
     def flow_weighted_restoration(self, disruption_k, disruption_strategy, simulation_num):
+        # disruption strategies include:
+        # 'node_degree', 'node_flow', 'node_betweenness_centrality', 'node_flow_centrality'
         def rafr_total_flow_calculator(flow_dict, od_cost, node_list):
             max_flows = 0
             for key, item in flow_dict.items():
