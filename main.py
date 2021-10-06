@@ -1,6 +1,7 @@
 import xc_resilience as xc
 
 if __name__ == '__main__':
+    # paths to files
     ad_path, flow_path, gps_path = {}, {}, {}
     ad_path['LDN'] = 'Dataset/London Adjacency Matrix.csv'
     ad_path['BA'] = 'Dataset/BART Adjacency Matrix 2017.csv'
@@ -50,18 +51,14 @@ if __name__ == '__main__':
     # preparedness analysis
     for network in networks:
         print(network.name, network.preparedness_gini())
-    # print('LDN', BA.preparedness_gini())
-    # print('LDN', DC.preparedness_gini())
-    # print('LDN', QLD.preparedness_gini())
-    # print('LDN', SG.preparedness_gini())
 
     # robustness analysis
-    # BA.robustness_flow_weighted_degree_based_attack(multi_processing=True)
-    # BA.robustness_flow_weighted_node_flow_based_attack(multi_processing=True)
-    # BA.robustness_flow_weighted_betweenness_based_attack(multi_processing=False, number_of_tests=1)
-    # BA.robustness_flow_weighted_flow_centrality_based_attack(multi_processing=False, number_of_tests=1)
-    # BA.robustness_flow_weighted_random_attack(multi_processing=False)
-
+    # for network in networks:
+    #     network.robustness_flow_weighted_degree_based_attack(multi_processing=True)
+    #     network.robustness_flow_weighted_node_flow_based_attack(multi_processing=True)
+    #     network.robustness_flow_weighted_betweenness_based_attack(multi_processing=False, number_of_tests=1)
+    #     network.robustness_flow_weighted_flow_centrality_based_attack(multi_processing=False, number_of_tests=1)
+    #     network.robustness_flow_weighted_random_attack(multi_processing=False)
 
     # print(BA.get_node_list())
     # print(BA.node_coordinates)
