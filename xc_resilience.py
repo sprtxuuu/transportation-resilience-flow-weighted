@@ -61,8 +61,8 @@ class Resilience:
         self._relocation_edge_weight = None
         self._restoration_edge_dict = None
         self._restoration_node_weight = None
-        # capacity-weighted model based on trips/routes (GTFS...)
-        self.edge_trip = {}
+        # capacity-weighted model based on trips/routes (GTFS compatible)
+        self.edge_trip = {}  # {edge: list of trips}
         self.trip_edge = {}  # {trip: list of edges}
         self.edge_param = defaultdict(dict)
         self.node_param = defaultdict(dict)
@@ -71,7 +71,7 @@ class Resilience:
         # multi-processing
         self.core_num = 8
 
-    def save_weights_to_json(self):
+    def _save_weights_to_json(self):
         res = {'gps': self.node_coordinates,
                'edge_trip': self.edge_trip,
                'trip_edge': self.trip_edge,
@@ -81,7 +81,7 @@ class Resilience:
                'node_capacity': self.node_capacity}
         save_pet(res, f'xc_{self.name}_weights')
 
-    def load_weights_from_save(self):
+    def _load_weights_from_save(self):
         res = load_pet(f'xc_{self.name}_weights')
         self.node_coordinates = res['gps']
         self.edge_trip = res['edge_trip']
