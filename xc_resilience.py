@@ -164,10 +164,11 @@ class Resilience:
 
     def load_from_GTFS_dataset(self):
         # under development
-        # 1. read files: routes.txt | stop_times.txt | stops.txt | trips.txt
+        # 1. read files: <routes.txt>, <stop_times.txt>, <stops.txt>, <trips.txt>
         # 2. load list of stops and stop parameters from <stop.txt>
-        # write self.node_param
+        # initialize self.node_param
         # 3. load list of routes and route parameters from <route.txt>
+        # initialize self.route_param
         # 4. build data connection: route_id <--> trip_id from <trips.txt>
         # route = {route_id: list of trip_id}
         # 5. build data connection: trip_id <--> edges (tuple of stops) from <stop_times.txt>
