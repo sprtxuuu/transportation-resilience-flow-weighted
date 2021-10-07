@@ -175,6 +175,7 @@ class Resilience:
         # self.trip_edge = {trip_id: list of edges}, edge_list= [(s1,s2),(s2,s3),...]
         # 6. derive self.edge_trip (reversed dict)
         # 7. use function load_edges_from_trip_edge to create network
+        # 8. compute self.edge_capacity and self.node_capacity
         pass
 
     def load_edges_from_trip_edge(self):
