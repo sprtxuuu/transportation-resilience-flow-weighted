@@ -1,3 +1,7 @@
+# version 1.6 updated ... in progress
+# GTFS compatible
+# can read files from GTFS-style dataset
+
 # version 1.5 updated 30 Sep 2021
 # travel distance calculation added
 
@@ -66,6 +70,7 @@ class Resilience:
         self.trip_edge = {}  # {trip: list of edges}
         self.edge_param = defaultdict(dict)
         self.node_param = defaultdict(dict)
+        self.route_param = defaultdict(dict)
         self.edge_capacity = {}
         self.node_capacity = {}
         # multi-processing
@@ -156,6 +161,20 @@ class Resilience:
         print(f'{self.name}, '
               f'number of nodes = {self.G.number_of_nodes()}, '
               f'number of edges = {self.G.number_of_edges()}')
+
+    def load_from_GTFS_dataset(self):
+        # under development
+        # 1. read files: routes.txt | stop_times.txt | stops.txt | trips.txt
+        # 2. load list of stops and stop parameters from <stop.txt>
+        # write self.node_param
+        # 3. load list of routes and route parameters from <route.txt>
+        # 4. build data connection: route_id <--> trip_id from <trips.txt>
+        # route = {route_id: list of trip_id}
+        # 5. build data connection: trip_id <--> edges (tuple of stops) from <stop_times.txt>
+        # self.trip_edge = {trip_id: list of edges}, edge_list= [(s1,s2),(s2,s3),...]
+        # 6. derive self.edge_trip (reversed dict)
+        # 7. use function load_edges_from_trip_edge to create network
+        pass
 
     def load_edges_from_trip_edge(self):
         """
