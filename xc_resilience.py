@@ -1082,6 +1082,15 @@ def export_list(xp_list, filename, mode='w'):
     print('file:', filename, 'created')
 
 
+def import_list(file_path):
+    with open(file_path, 'r') as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',')
+        ip_list = []
+        for row in csv_reader:
+            ip_list.append(row)
+    return ip_list
+
+
 def save_pet(pet, filename='temporary file'):
     with open(filename, 'w') as f:
         f.write(json.dumps(str(pet)))
