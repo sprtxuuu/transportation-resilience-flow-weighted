@@ -1,9 +1,8 @@
-# in progress
+#
+# version 1.4 updated in progress
 # GTFS compatible
 # read files from GTFS-style dataset
-
-# version 1.4 updated
-# simple paths based betweenness
+# simple-paths-based betweenness
 # node visit frequency (OD flow analysis)
 
 # version 1.3 updated 30 Sep 2021
@@ -95,21 +94,6 @@ class Resilience:
         self.node_param = res['node_param']
         self.edge_capacity = res['edge_capacity']
         self.node_capacity = res['node_capacity']
-
-    def get_node_list(self):
-        return list(self.G.nodes)
-
-    def get_edge_list(self):
-        return list(self.G.edges)
-
-    def get_edge_dict(self, update=True):
-        if update:
-            edge_dict = defaultdict(list)
-            for edge in self.G.edges():
-                x, y = edge[0], edge[1]
-                edge_dict[x].append(y)
-            self._edge_dict = edge_dict
-        return self._edge_dict
 
     def load_adjacency_matrix(self, file_path, contain_header=True):
         node_list = []
@@ -286,6 +270,21 @@ class Resilience:
                 if next_node not in visited and next_node not in path:
                     path.append(next_node)
         return visited
+
+    def get_node_list(self):
+        return list(self.G.nodes)
+
+    def get_edge_list(self):
+        return list(self.G.edges)
+
+    def get_edge_dict(self, update=True):
+        if update:
+            edge_dict = defaultdict(list)
+            for edge in self.G.edges():
+                x, y = edge[0], edge[1]
+                edge_dict[x].append(y)
+            self._edge_dict = edge_dict
+        return self._edge_dict
 
     def get_node_degree(self):
         return dict(nx.degree(self.G))
