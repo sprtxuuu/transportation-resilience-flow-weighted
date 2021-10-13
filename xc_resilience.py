@@ -1,24 +1,24 @@
-# version 1.6 updated ... in progress
+# in progress
 # GTFS compatible
-# can read files from GTFS-style dataset
-
-# version 1.5 updated 30 Sep 2021
-# travel distance calculation added
+# read files from GTFS-style dataset
 
 # version 1.4 updated
-# add unweighted relocation analysis (node level)
+# simple paths based betweenness
+# node visit frequency (OD flow analysis)
 
-# version 1.3 updated
-# add parameter trip_edge= {trip: [edge,...]}
-# (need manual read load_pet)
-# can load edge list from trip_edge dict
+# version 1.3 updated 30 Sep 2021
+# travel distance calculation added
+# unweighted relocation analysis (node level)
 
 # version 1.2 updated
-# add capacity-weighted model based on trips/routes
-# add capacity-related parameters
+# parameter trip_edge= {trip: [edge,...]}
+# (need manual read load_pet)
+# load edge list from trip_edge dict
 
 # version 1.1 updated
-# can combine two ClassResilience providing cross-layer edges
+# capacity-weighted model based on trips/routes
+# capacity-related parameters
+# combine two ClassResilience providing cross-layer edges
 
 import csv
 import numpy as np
@@ -364,6 +364,41 @@ class Resilience:
         else:
             return travel_distance_distribution
 
+    def get_travel_visit_freq(self):
+        freq_all = {item: 0 for item in self.get_node_list()}
+        total_flow = 0
+        for od_pair, flow in self.od_flow.items():
+            total_flow += flow
+            s, t = od_pair
+            all_simple_paths = list(nx.all_simple_paths(self.G, s, t))
+            k = len(all_simple_paths)
+            freq = defaultdict(lambda: 0)
+            for path in all_simple_paths:
+                for node in path:
+                    freq[node] += flow
+            for key, value in freq.items():
+                freq_all[key] += value / k
+        freq_all = {key: value / total_flow for key, value in freq_all.items()}
+        return freq_all
+
+    def get_node_sov(self, G):
+        freq_all = {item: 0 for item in G.nodes()}
+        ODs = list(combinations(G.nodes(), 2))
+        K = len(ODs)
+        if K < 1:
+            return freq_all
+        for s, t in ODs:
+            all_simple_paths = list(nx.all_simple_paths(G, s, t))
+            k = len(all_simple_paths)
+            freq = defaultdict(lambda: 0)
+            for path in all_simple_paths:
+                for node in path:
+                    freq[node] += 1
+            for key, value in freq.items():
+                freq_all[key] += value / k
+        freq_all_nom = {key: value / K for key, value in freq_all.items()}
+        return freq_all_nom
+
     def preparedness_node_degree_gini(self):
         node_degree = self.get_node_degree()
         return gini([value for value in node_degree.values()])
@@ -392,6 +427,15 @@ class Resilience:
                 'Gini_NF': self.preparedness_node_flow_gini(),
                 'Gini_FC': self.preparedness_node_flow_centrality_gini()}
 
+    def robustness_unweighted_sov_based_attack(self, number_of_tests=100,
+                                               multiple_removal=1,
+                                               multi_processing=False):
+        strategy, weight = 'sov', False
+        return self._robustness_repeated_tests(strategy=strategy, weight=weight,
+                                               number_of_tests=number_of_tests,
+                                               multiple_removal=multiple_removal,
+                                               multi_processing=multi_processing)
+
     def _unweighted_sequential_attack(self, strategy=None, multiple_removal=1):
         """
         single scenario test
@@ -410,6 +454,9 @@ class Resilience:
             elif strategy == 'node_betweenness_centrality':
                 bc_dic = nx.betweenness_centrality(temp_g)
                 i = search_for_max(bc_dic, multiple_search=multiple_removal)
+            elif strategy == 'sov':
+                sov_dic = self.get_node_sov(G=temp_g)
+                i = search_for_max(sov_dic, multiple_search=multiple_removal)
             else:
                 if multiple_removal > len(node_list):
                     i = copy.deepcopy(node_list)
@@ -493,7 +540,8 @@ class Resilience:
                                tqdm(range(number_of_tests))]
             else:
                 pool_result = [pool.apply_async(self._unweighted_sequential_attack,
-                                                args=(strategy, multiple_removal)) for test in range(number_of_tests)]
+                                                args=(strategy, multiple_removal)) for test in
+                               tqdm(range(number_of_tests))]
             pool.close()
             pool.join()
             for nt in pool_result:
