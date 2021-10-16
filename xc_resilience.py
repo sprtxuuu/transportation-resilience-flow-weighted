@@ -64,12 +64,15 @@ class Resilience:
         self._relocation_edge_weight = None
         self._restoration_edge_dict = None
         self._restoration_node_weight = None
-        # capacity-weighted model based on trips/routes (GTFS compatible)
-        self.edge_trip = {}  # {edge: list of trips}
+        # capacity-weighted model based on trips/routes (GTFS data)
+        self.routes = []
+        self.route_trip = {}
         self.trip_edge = {}  # {trip: list of edges}
-        self.edge_param = defaultdict(dict)
-        self.node_param = defaultdict(dict)
+        self.trip_route = {}
+        self.edge_trip = {}  # {edge: list of trips}
         self.route_param = defaultdict(dict)
+        self.trip_param = defaultdict(dict)
+        self.node_param = defaultdict(dict)
         self.edge_capacity = {}
         self.node_capacity = {}
         # multi-processing
