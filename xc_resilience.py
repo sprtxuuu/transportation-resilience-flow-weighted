@@ -4,6 +4,7 @@
 # read files from GTFS-style dataset
 # simple-paths-based betweenness
 # node visit frequency (OD flow analysis)
+# robustness_flow_weighted_target_list_attack (pre-determined target list)
 
 # version 1.3 updated 30 Sep 2021
 # travel distance calculation added
@@ -641,6 +642,59 @@ class Resilience:
                                                number_of_tests=number_of_tests,
                                                multiple_removal=multiple_removal,
                                                multi_processing=multi_processing)
+
+    def _robustness_flow_weighted_target_list_attack(self, strategy, multiple_removal=1, number_of_tests=1):
+        curves = []
+        for n_test in range(number_of_tests):
+            # generate pre-determined target list
+            non = self.G.number_of_nodes()
+            if strategy == 'node_degree':
+                nd_dic = dict(nx.degree(self.G))
+                target_list = search_for_max(nd_dic, multiple_search=non)
+            elif strategy == 'node_betweenness_centrality':
+                bc_dic = nx.betweenness_centrality(self.G)
+                target_list = search_for_max(bc_dic, multiple_search=non)
+            elif strategy == 'node_flow':
+                nf_dic = self.get_node_flow()
+                target_list = search_for_max(nf_dic, multiple_search=non)
+            elif strategy == 'node_flow_centrality':
+                fc_dic = self.get_node_flow_centrality()
+                target_list = search_for_max(fc_dic, multiple_search=non)
+            else:
+                target_list = []
+                print('wrong parameter: strategy')
+            if len(target_list) != non:
+                print('error.................')
+            temp = copy.deepcopy(self)
+            node_list, n0 = list(temp.G.nodes()), temp.G.number_of_nodes()
+            removed_list, degradation_curve = [], [1.0]
+            step = 0
+            total_flow = np.sum([value for value in self.od_flow.values()])
+            while node_list:
+                i, idi = [], 0
+                while target_list and idi < multiple_removal:
+                    i.append(target_list.pop(0))
+                    idi += 1
+                removed_list.extend(i)
+                temp.G.remove_nodes_from(i)
+                node_list = list(temp.G.nodes())
+                step += 1
+                if node_list:  # identify remaining flow
+                    remaining_flow = 0
+                    for origin in node_list:
+                        reached = temp.reachable_nodes(origin)
+                        for destination in reached:
+                            remaining_flow += temp.od_flow[origin, destination]
+                    degradation_curve.append(remaining_flow / total_flow)
+                else:
+                    degradation_curve.append(0)
+            curves.append(degradation_curve)
+        average_curve = np.mean(curves, axis=0)
+        non = len(self.get_node_list())
+        xs = [x / non for x in range(0, non, multiple_removal)]
+        xs.append(1.0)
+        print(f'(target list attack) rb_{strategy} =', numerical_integral_nml(average_curve, xs=xs))
+        return average_curve
 
     def _attack_sequence_generation(self, strategy, multiple_removal=1):
         temp = copy.deepcopy(self)
