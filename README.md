@@ -1,5 +1,5 @@
 # metro-resilience-od-flow
-This is the repository for the paper **Resilient Urban Public Transportation Infrastructure: A Comparison of Five Flow-Weighted Metro Networks in terms of the Resilience Cycle Framework**, link: .
+This is the repository for the paper **Resilient Urban Public Transportation Infrastructure: A Comparison of Five Flow-Weighted Metro Networks in terms of the Resilience Cycle Framework**, link: https://doi.org/10.1109/tits.2021.3116667.
 
 To conduct the analysis with the example data, find and run the main.py.  
 
