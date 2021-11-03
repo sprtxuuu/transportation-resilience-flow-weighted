@@ -215,6 +215,7 @@ class Resilience:
 
     def load_flow_matrix(self, file_path, contain_header=True):
         # same format as adjacency matrix
+        # warning: must has same order of stations
         flow_matrix = []
         with open(file_path, 'r') as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=',')
@@ -233,13 +234,13 @@ class Resilience:
             for row in flow_matrix:
                 del row[0]
             del flow_matrix[0]
-        for x in range(len(flow_matrix)):
-            for y in range(len(flow_matrix[x])):
-                if len(flow_matrix[x][y].strip()) < 1 or flow_matrix[x][y] == '/':
+        for idx in range(len(flow_matrix)):
+            for idy in range(len(flow_matrix[idx])):
+                if len(flow_matrix[idx][idy].strip()) < 1 or flow_matrix[idx][idy] == '/':
                     # print(f"data missing at position({x, y}), header excluded..")
-                    flow_matrix[x][y] = 0
+                    flow_matrix[idx][idy] = 0.0
                 else:
-                    flow_matrix[x][y] = float(flow_matrix[x][y])
+                    flow_matrix[idx][idy] = float(flow_matrix[idx][idy])
         for idx in range(len(flow_matrix)):
             for idy in range(len(flow_matrix[idx])):
                 x, y = self.get_node_list()[idx], self.get_node_list()[idy]
@@ -258,7 +259,10 @@ class Resilience:
             del coordinates[0]
         for row in coordinates:
             node, lat, lon = row[node_col], eval(row[lat_col]), eval(row[lon_col])
-            self.node_coordinates[(self.name, node)] = (lat, lon)
+            if (self.name, node) in self.get_node_list():
+                self.node_coordinates[(self.name, node)] = (lat, lon)
+            else:
+                print(f'(load GPS) Error: station {(self.name, node)} not found in node list')
 
     def reachable_nodes(self, origin, edge_dict=None):
         current_node = origin
@@ -309,8 +313,9 @@ class Resilience:
         for u in self.get_node_list():
             # for v in self.reachable_nodes(u):
             for v in self.get_node_list():
-                if v != u:
+                if v != u: # avoid self-loop
                     self.node_flow[u] += self.od_flow[u, v]
+                    self.node_flow[v] += self.od_flow[u, v]
         return self.node_flow
 
     def get_node_flow_centrality(self):
@@ -540,11 +545,11 @@ class Resilience:
             if weight:
                 pool_result = [pool.apply_async(self._flow_weighted_sequential_attack,
                                                 args=(strategy, multiple_removal)) for test in
-                               tqdm(range(number_of_tests))]
+                               range(number_of_tests)]
             else:
                 pool_result = [pool.apply_async(self._unweighted_sequential_attack,
                                                 args=(strategy, multiple_removal)) for test in
-                               tqdm(range(number_of_tests))]
+                               range(number_of_tests)]
             pool.close()
             pool.join()
             for nt in pool_result:
@@ -557,7 +562,7 @@ class Resilience:
             print(f'rb_{strategy} =', numerical_integral_nml(average_curve, xs=xs))
         else:
             curves = []
-            for test in range(number_of_tests):
+            for test in tqdm(range(number_of_tests)):
                 if weight:
                     curves.append(self._flow_weighted_sequential_attack(
                         strategy=strategy, multiple_removal=multiple_removal))
@@ -694,7 +699,7 @@ class Resilience:
         xs = [x / non for x in range(0, non, multiple_removal)]
         xs.append(1.0)
         print(f'(target list attack) rb_{strategy} =', numerical_integral_nml(average_curve, xs=xs))
-        return average_curve
+        return average_curve, xs
 
     def _attack_sequence_generation(self, strategy, multiple_removal=1):
         temp = copy.deepcopy(self)
@@ -1186,11 +1191,15 @@ def export_list(xp_list, filename, mode='w'):
     print('file:', filename, 'created')
 
 
-def import_list(file_path):
+def import_list(file_path, change_type=None):
     with open(file_path, 'r') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         ip_list = []
         for row in csv_reader:
+            if change_type == 'float':
+                row = [float(item) for item in row]
+            elif change_type == 'int':
+                row = [int(item) for item in row]
             ip_list.append(row)
     return ip_list
 
