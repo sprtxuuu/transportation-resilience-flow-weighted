@@ -1,4 +1,4 @@
-# Metro resilience based on resilience cycle framework
+# Flow-weighetd metro resilience based on resilience cycle framework
 This is the repository related to the paper (early access):
 
 Z. Xu, S. S. Chopra and H. Lee, "Resilient Urban Public Transportation Infrastructure: A Comparison of Five Flow-Weighted Metro Networks in Terms of the Resilience Cycle Framework," in IEEE Transactions on Intelligent Transportation Systems, [doi: 10.1109/TITS.2021.3116667](https://doi.org/10.1109/tits.2021.3116667).
