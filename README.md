@@ -1,5 +1,5 @@
 # metro-resilience-od-flow
-This is the repository related to the paper **Resilient Urban Public Transportation Infrastructure: A Comparison of Five Flow-Weighted Metro Networks in terms of the Resilience Cycle Framework**, preprint link: https://doi.org/10.1109/tits.2021.3116667.
+This is the repository related to the paper **Z. Xu, S. S. Chopra and H. Lee, "Resilient Urban Public Transportation Infrastructure: A Comparison of Five Flow-Weighted Metro Networks in Terms of the Resilience Cycle Framework," in IEEE Transactions on Intelligent Transportation Systems, doi: 10.1109/TITS.2021.3116667.**, preprint link: https://doi.org/10.1109/tits.2021.3116667.
 
 To conduct the analysis with the example data, find and run the main.py.  
 
@@ -13,3 +13,5 @@ We also provide details in data collection of Origin-Destination flows from publ
 | xc_resilience.py | framework of resilience cycle analysis |
 | Dataset | example data: adjacency matrices, Origin-Destination flow matrix, node coordinates |
 | Data_Collection_Information.docx | the instruction for data collection |
+
+
