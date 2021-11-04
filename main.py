@@ -55,6 +55,7 @@ if __name__ == '__main__':
 
     # # robustness analysis
     # # use multi-processing to speed up
+    # # return degradation curve, format: list of lists [ys, xs]
     for network in networks:
         network.core_num = 4  # number of CPU cores for multi-processing, default value = 8
         network.robustness_flow_weighted_degree_based_attack(multi_processing=True, number_of_tests=1000)
@@ -67,6 +68,7 @@ if __name__ == '__main__':
     # # disruption_k: damage level (fraction of nodes removed)
     # # disruption_strategy: include 'node_degree', 'node_flow', 'node_betweenness_centrality', 'node_flow_centrality'
     # # simulation_num: number of repeated simulations
+    # # return restoration curve, format: list of tuples [(step num, restoration, restoration + relocation),...]
     for network in networks:
         network.flow_weighted_restoration(disruption_k=0.5, disruption_strategy='node_degree', simulation_num=10)
         network.flow_weighted_restoration(disruption_k=0.5, disruption_strategy='node_flow', simulation_num=2)
@@ -75,12 +77,3 @@ if __name__ == '__main__':
         network.flow_weighted_restoration(disruption_k=0.5, disruption_strategy='node_flow_centrality',
                                           simulation_num=2)
 
-    # BA.robustness_flow_weighted_betweenness_based_attack()
-
-    # adaptation analysis
-    # BA.robustness_flow_weighted_degree_based_attack(multi_processing=True)
-    # BA.robustness_flow_weighted_node_flow_based_attack(multi_processing=True)
-    # BA.robustness_flow_weighted_betweenness_based_attack(multi_processing=False, number_of_tests=1)
-    # BA.robustness_flow_weighted_flow_centrality_based_attack(multi_processing=False, number_of_tests=1)
-    # BA.robustness_flow_weighted_random_attack(multi_processing=False)
-    #

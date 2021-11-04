@@ -1,4 +1,5 @@
-#
+# Author: Zizhen Xu
+
 # version 1.4 updated in progress
 # GTFS compatible
 # read files from GTFS-style dataset
@@ -29,7 +30,6 @@ from collections import OrderedDict
 import copy
 from multiprocessing import Pool
 import matplotlib.pyplot as plt
-
 import pandas as pd
 import math
 from math import radians, cos, sin, asin, sqrt
@@ -37,11 +37,11 @@ from networkx.algorithms import approximation as approx
 from tqdm import tqdm
 from itertools import permutations
 import json
-import itertools
-import multiprocessing
 from itertools import combinations
-from itertools import product
-import matplotlib
+# import itertools
+# import multiprocessing
+# from itertools import product
+# import matplotlib
 
 
 class Resilience:
@@ -539,6 +539,7 @@ class Resilience:
                                    number_of_tests=100,
                                    multiple_removal=1,
                                    multi_processing=False):
+        # return degradation curve, format: [ys, xs]
         if multi_processing:
             curves = []
             pool = Pool(processes=self.core_num)
@@ -877,6 +878,7 @@ class Resilience:
     def flow_weighted_restoration(self, disruption_k, disruption_strategy, simulation_num):
         # disruption strategies include:
         # 'node_degree', 'node_flow', 'node_betweenness_centrality', 'node_flow_centrality'
+        # return restoration curve, format: list of tuples [(step num, restoration, restoration + relocation),...]
         def rafr_total_flow_calculator(flow_dict, od_cost, node_list):
             max_flows = 0
             for key, item in flow_dict.items():
