@@ -1,9 +1,7 @@
-# metro-resilience-od-flow
-This is the repository related to the paper 
+# Metro resilience based on resilience cycle framework
+This is the repository related to the paper (early access):
 
-**Z. Xu, S. S. Chopra and H. Lee, "Resilient Urban Public Transportation Infrastructure: A Comparison of Five Flow-Weighted Metro Networks in Terms of the Resilience Cycle Framework," in IEEE Transactions on Intelligent Transportation Systems, doi: 10.1109/TITS.2021.3116667.** 
-
-preprint link: https://doi.org/10.1109/tits.2021.3116667.
+Z. Xu, S. S. Chopra and H. Lee, "Resilient Urban Public Transportation Infrastructure: A Comparison of Five Flow-Weighted Metro Networks in Terms of the Resilience Cycle Framework," in IEEE Transactions on Intelligent Transportation Systems, [doi: 10.1109/TITS.2021.3116667](https://doi.org/10.1109/tits.2021.3116667).
 
 #
 
@@ -23,4 +21,14 @@ We also provide details in data collection of Origin-Destination flows from publ
 #
 
 Citation:
-@ARTICLE{9592719,  author={Xu, Zizhen and Chopra, Shauhrat S. and Lee, Hellas},  journal={IEEE Transactions on Intelligent Transportation Systems},   title={Resilient Urban Public Transportation Infrastructure: A Comparison of Five Flow-Weighted Metro Networks in Terms of the Resilience Cycle Framework},   year={2021},  volume={},  number={},  pages={1-12},  doi={10.1109/TITS.2021.3116667}}
+```
+@ARTICLE{9592719,  
+author={Xu, Zizhen and Chopra, Shauhrat S. and Lee, Hellas},  
+journal={IEEE Transactions on Intelligent Transportation Systems},   
+title={Resilient Urban Public Transportation Infrastructure: A Comparison of Five Flow-Weighted Metro Networks in Terms of the Resilience Cycle Framework},   
+year={2021},  
+volume={},  
+number={},  
+pages={1-12},  
+doi={10.1109/TITS.2021.3116667}}
+```
