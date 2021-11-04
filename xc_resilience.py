@@ -1,6 +1,4 @@
-# Author: Zizhen Xu
-
-# version 1.4 updated in progress
+# version 1.4 in progress
 # GTFS compatible
 # read files from GTFS-style dataset
 # simple-paths-based betweenness
