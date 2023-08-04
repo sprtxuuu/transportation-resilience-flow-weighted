@@ -995,8 +995,8 @@ class Resilience:
              node_size=3,
              node_color='#1f78b4',
              node_shape='o',
-             linewidths=0.2,
-             width=0.5,
+             linewidths=1,
+             width=1,
              edge_color='dimgray',
              style='solid',
              arrowsize=0.5,
@@ -1004,7 +1004,7 @@ class Resilience:
              edge_cmap=None,
              edge_vmin=None,
              edge_vmax=None):
-        plt.figure(1, figsize=(12, 12))
+        plt.figure(1, figsize=(3, 3))
         pos = {key: (value[1], value[0]) for key, value in self.node_coordinates.items()}
         nx.draw_networkx(self.G, pos=pos,
                          with_labels=with_labels,
@@ -1026,13 +1026,14 @@ class Resilience:
         if legend:
             plt.legend()
         if caption:
-            plt.title(self.name)
+            plt.title(self.name, fontsize=12, loc='center')
         if save_path is not None:
             plt.savefig(save_path, transparent=True, dpi=300)
         elif save:
             plt.savefig(f'fig_{self.name}.png', transparent=True, dpi=300 * resize)
         if show:
             plt.show()
+        plt.close()
 
 
 def search_for_max(dic, multiple_search=1):
